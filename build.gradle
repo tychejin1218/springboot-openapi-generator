@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.3'
     id 'io.spring.dependency-management' version '1.1.4'
+    id 'org.openapi.generator' version '7.4.0'
 }
 
 group = 'com.example'
@@ -22,7 +23,9 @@ dependencies {
 
     // OpenAPI
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.4.0'
-    implementation 'org.openapitools:openapi-generator-gradle-plugin:7.4.0'
+    implementation('org.openapitools:openapi-generator-gradle-plugin:7.4.0') {
+        exclude group: 'org.slf4j', module: 'slf4j-simple'
+    }
 
     // Lombok
     compileOnly 'org.projectlombok:lombok'
@@ -33,4 +36,33 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+// OpenAPI 설정
+openApiGenerate {
+    verbose.set(true)
+    generatorName.set("spring")
+    inputSpec.set(project.file("$rootDir/src/main/resources/petstore.yml").absolutePath)
+    outputDir.set(project.layout.buildDirectory.dir("generated").get().asFile.absolutePath)
+    apiPackage.set("com.example.openapi.api")
+    modelPackage.set("com.example.openapi.model")
+    configOptions.set([
+            useSpringBoot3 : "true",
+            openApiNullable: "false",
+            useTags        : "true",
+            interfaceOnly  : "true",
+            sourceFolder   : "/java",
+            implFolder     : "/java",
+    ])
+}
+
+compileJava.dependsOn tasks.named("openApiGenerate")
+
+// sourceSets 설정
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java', 'build/generated/java']
+        }
+    }
 }
