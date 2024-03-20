@@ -11,6 +11,7 @@
 - #### 참고
   - #### OpenAPI
     - #### https://swagger.io/docs/specification/about
+    - #### https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator-gradle-plugin/README.adoc
     - #### https://www.baeldung.com/spring-rest-openapi-documentation
     - #### https://www.baeldung.com/java-openapi-generator-server
     - #### https://github.com/OpenAPITools/openapi-generator

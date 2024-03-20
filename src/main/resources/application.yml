@@ -1,6 +1,8 @@
 # SERVER 설정
 server:
   port: 9091
+  servlet:
+    context-path: /api
 
 ---
 # Swagger UI 및 OpenAPI 설정

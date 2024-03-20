@@ -42,7 +42,8 @@ tasks.named('test') {
 openApiGenerate {
     verbose.set(true)
     generatorName.set("spring")
-    inputSpec.set(project.file("$rootDir/src/main/resources/petstore.yml").absolutePath)
+//    inputSpec.set(project.file("$rootDir/src/main/resources/petstore.yml").absolutePath)
+    inputSpec.set(project.file("$rootDir/src/main/resources/todo.yml").absolutePath)
     outputDir.set(project.layout.buildDirectory.dir("generated").get().asFile.absolutePath)
     apiPackage.set("com.example.openapi.api")
     modelPackage.set("com.example.openapi.model")
