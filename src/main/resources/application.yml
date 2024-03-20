@@ -1,0 +1,3 @@
+# SERVER 설정
+server:
+  port: 9091
