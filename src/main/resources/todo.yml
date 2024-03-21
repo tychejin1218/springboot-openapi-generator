@@ -19,13 +19,9 @@ paths:
       operationId: addTodo
       responses:
         '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TodoResponse'
-        '405':
-          description: Invalid input
+          $ref: '#/components/responses/Base'
+        '400':
+          $ref: '#/components/responses/Error'
       requestBody:
         $ref: '#/components/requestBodies/Todo'
     put:
@@ -36,17 +32,9 @@ paths:
       operationId: updateTodo
       responses:
         '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TodoResponse'
+          $ref: '#/components/responses/Base'
         '400':
-          description: Invalid ID supplied
-        '404':
-          description: Todo not found
-        '405':
-          description: Validation exception
+          $ref: '#/components/responses/Error'
       requestBody:
         $ref: '#/components/requestBodies/Todo'
   '/todo/{id}':
@@ -66,15 +54,9 @@ paths:
             format: int64
       responses:
         '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TodoResponse'
+          $ref: '#/components/responses/Base'
         '400':
-          description: Invalid ID supplied
-        '404':
-          description: Todo not found
+          $ref: '#/components/responses/Error'
     delete:
       tags:
         - todo
@@ -90,8 +72,10 @@ paths:
             type: integer
             format: int64
       responses:
+        '200':
+          $ref: '#/components/responses/Base'
         '400':
-          description: Invalid Todo value
+          $ref: '#/components/responses/Error'
 components:
   requestBodies:
     Todo:
@@ -101,7 +85,50 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/TodoRequest'
+  responses:
+    Base:
+      description: 성공
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BaseResponse'
+    Error:
+      description: 실패
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   schemas:
+    BaseResponse:
+      type: object
+      properties:
+        statusCode:
+          type: string
+          example: "200"
+        message:
+          type: string
+          example: "성공"
+        data:
+          type: object
+          $ref: '#/components/schemas/TodoResponse'
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: string
+          example: "400"
+        message:
+          type: string
+          example: "성공"
+        method:
+          type: string
+          example: "GET"
+        path:
+          type: string
+          example: "path"
+        timestamp:
+          type: string
+          example: "timestamp"
     TodoRequest:
       title: Todo.Request
       description: Todo 요청을 위한 객체
@@ -142,3 +169,4 @@ components:
           type: boolean
           example: false
           description: Todo 완료 여부
+
