@@ -119,16 +119,16 @@ components:
           example: "400"
         message:
           type: string
-          example: "성공"
+          example: "실패"
         method:
           type: string
-          example: "GET"
+          example: "POST"
         path:
           type: string
-          example: "path"
+          example: "/api/todo"
         timestamp:
           type: string
-          example: "timestamp"
+          example: "20240321172842"
     TodoRequest:
       title: Todo.Request
       description: Todo 요청을 위한 객체
